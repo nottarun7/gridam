@@ -1,4 +1,4 @@
-# GRIഢം — Charge right. Drive clean.
+# GRIഢം —> Charge right. Drive clean.
 
 GRIഢം is a grid-aware EV charging web app for Kochi, Kerala. It helps a driver
 choose a charger *and* a better time to charge by combining charger discovery,
