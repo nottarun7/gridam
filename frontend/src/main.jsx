@@ -638,11 +638,138 @@ function OperatorMix({ data }) {
   return <div className="operator-mix">{Object.entries(data).map(([name, count]) => <div key={name}><span>{name}</span><strong>{count}</strong></div>)}</div>;
 }
 
+function Landing() {
+  const features = [
+    { icon: MapPin, title: "Charging map", body: "Find Kochi chargers with live availability signals, connector details, distance, and source labels." },
+    { icon: Leaf, title: "Carbon-aware ranking", body: "Compare Greenest, Fastest, and Balanced scores before choosing where to plug in." },
+    { icon: BatteryCharging, title: "Charge Right forecast", body: "Plan a charging window using 24-hour carbon intensity, grid load, and time-of-use tariff curves." },
+    { icon: Bot, title: "Grounded assistant", body: "Ask the AI for station choices or cleaner start times based on the active map and forecast context." },
+  ];
+
+  const mechanics = [
+    { label: "Distance", value: "30%", body: "Haversine distance is normalized across nearby chargers so closer stations score higher." },
+    { label: "Carbon", value: "30-45%", body: "Carbon intensity comes from Electricity Maps for IN-SO when available, then falls back to a Kerala-calibrated model." },
+    { label: "Grid load", value: "15-30%", body: "Synthetic load curves penalize the evening peak and reward midday or late-night charging windows." },
+    { label: "Availability", value: "10-20%", body: "Free plug ratio and charger power keep recommendations realistic for a driver who needs to charge now." },
+  ];
+
+  return (
+    <main className="landing-page">
+      <nav className="landing-nav" aria-label="Landing navigation">
+        <Link to="/" className="brand-word">GRIDAM</Link>
+        <div>
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#under-hood">Under the hood</a>
+          <a href="#contact">Contact</a>
+          <Link className="launch-link" to="/app"><MapPin size={18} /> Open app</Link>
+        </div>
+      </nav>
+
+      <section className="landing-hero">
+        <div className="hero-map-scene" aria-hidden="true">
+          <span className="route-line one" />
+          <span className="route-line two" />
+          <span className="hero-pin primary" />
+          <span className="hero-pin secondary" />
+          <span className="hero-pin tertiary" />
+          <div className="hero-dashboard-card main">
+            <p className="eyebrow">Best charger now</p>
+            <strong>KSEB EV Hub - MG Road</strong>
+            <span>412 g/kWh / 2.8 km / 3 plugs</span>
+          </div>
+          <div className="hero-dashboard-card mini">
+            <Leaf size={18} />
+            <span>Green window 13:00</span>
+          </div>
+        </div>
+        <div className="hero-copy">
+          <p className="eyebrow">Grid-aware EV charging for Kochi</p>
+          <h1>Charge where the grid is cleanest.</h1>
+          <p>
+            GRIDAM ranks EV chargers using carbon intensity, grid load, distance, availability, and tariff timing so drivers can make cleaner charging decisions without slowing down.
+          </p>
+          <div className="hero-actions">
+            <Link className="hero-primary" to="/app"><Zap size={20} /> Launch charging map</Link>
+            <a className="hero-secondary" href="#under-hood">See the calculations <ChevronRight size={18} /></a>
+          </div>
+          <div className="hero-stats" aria-label="GRIDAM demo statistics">
+            <Metric label="Launch zone" value="IN-SO" suffix="Kerala grid" />
+            <Metric label="Forecast" value="24h" suffix="carbon + tariff" />
+            <Metric label="Modes" value="3" suffix="ranking strategies" />
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="landing-section split-section">
+        <div>
+          <p className="eyebrow">About</p>
+          <h2>Built for the moment before a driver plugs in.</h2>
+        </div>
+        <p>
+          Most charging apps show where chargers are. GRIDAM adds when and why: it turns station data, modeled grid behavior, and user impact into a clean recommendation layer for Kochi's EV drivers and operators.
+        </p>
+      </section>
+
+      <section id="features" className="landing-section">
+        <div className="section-heading">
+          <p className="eyebrow">Features</p>
+          <h2>Everything the demo needs, kept focused.</h2>
+        </div>
+        <div className="landing-card-grid">
+          {features.map((item) => <LandingCard key={item.title} {...item} />)}
+        </div>
+      </section>
+
+      <section id="under-hood" className="landing-section under-hood">
+        <div className="section-heading">
+          <p className="eyebrow">Under the hood</p>
+          <h2>How the statistics and recommendations work.</h2>
+          <p>Scores are transparent enough for a hackathon judge to follow and practical enough for a driver to trust.</p>
+        </div>
+        <div className="formula-panel">
+          <div>
+            <span>Balanced score</span>
+            <strong>0.30 distance + 0.30 carbon + 0.25 grid + 0.15 availability</strong>
+            <p>Greenest increases carbon weight to 45%. Fastest increases proximity weight to 55% and still protects against overloaded or unavailable stations.</p>
+          </div>
+          <Gauge size={46} />
+        </div>
+        <div className="landing-card-grid mechanics">
+          {mechanics.map((item) => <article key={item.label} className="mechanic-card"><span>{item.label}</span><strong>{item.value}</strong><p>{item.body}</p></article>)}
+        </div>
+      </section>
+
+      <section id="contact" className="landing-section contact-section">
+        <div>
+          <p className="eyebrow">Contact us</p>
+          <h2>Want to pilot greener charging decisions?</h2>
+          <p>Use GRIDAM for demos, operator walkthroughs, or partner-data conversations around Kerala's EV charging network.</p>
+        </div>
+        <div className="contact-actions">
+          <a className="hero-primary" href="mailto:hello@gridam.local"><Send size={18} /> hello@gridam.local</a>
+          <Link className="hero-secondary" to="/operator">View operator dashboard <ChevronRight size={18} /></Link>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function LandingCard({ icon: Icon, title, body }) {
+  return (
+    <article className="landing-card">
+      <Icon size={22} />
+      <h3>{title}</h3>
+      <p>{body}</p>
+    </article>
+  );
+}
+
 function Root() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/app" replace />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/app/*" element={<AppShell />} />
         <Route path="/operator" element={<Operator />} />
         <Route path="*" element={<Navigate to="/app" replace />} />
