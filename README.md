@@ -132,33 +132,7 @@ With the backend running, open these endpoints:
 - [http://localhost:8000/charging-stations](http://localhost:8000/charging-stations)
   — stations near the default Kochi centre.
 
-## Project layout
 
-```text
-gridam/
-├── backend/                  # FastAPI APIs, data integrations, SQLite store
-│   ├── main.py               # endpoints and aggregation
-│   ├── grid.py               # live-carbon anchoring + calibrated fallback
-│   ├── electricitymap.py     # Electricity Maps client/cache
-│   ├── scoring.py            # station ranking weights
-│   └── store.py              # community stations, sessions and profile data
-├── web/                      # React/Vite application served by nginx
-│   └── src/                  # landing page, map, dashboards and components
-├── docker-compose.yml        # full local stack
-├── DATA_SOURCES.md           # source, fallback and calculation reference
-├── DEMO_WORKFLOW.md          # 7–10 minute presentation walkthrough
-├── GRID_DATA.md              # Kerala grid data and citations
-├── EXPLAINER.md              # product explainer
-└── PITCH.md                  # pitch material
-```
-
-## Demonstrating GRIഢം
-
-Start at the landing page, explain why charging time matters, then launch the
-app and walk through the map, ranking modes, Charge Right, Impact/Profile and
-Operator Console. [DEMO_WORKFLOW.md](DEMO_WORKFLOW.md) provides the exact talk
-track, formulas, Kerala grid statistics, dashboard explanations and clear
-guidance on what is live versus modelled.
 
 ## Current limitations and next steps
 
